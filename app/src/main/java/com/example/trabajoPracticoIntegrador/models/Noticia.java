@@ -1,38 +1,39 @@
-package com.example.clase4;
+package com.example.trabajoPracticoIntegrador.models;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Noticia implements Comparable<Noticia> {
-    private String titulo;
-    private String detalle;
-    private Date fecha;
+public class Noticia implements Comparable<Noticia>, Serializable {
+    private String title;
+    private String detail;
+    private Date date;
     private String urlImg;
     private byte[] img;
     private String link;
 
-    public Date getFecha() {
-        return fecha;
+    public Date getDate() {
+        return date;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDetalle() {
-        return detalle;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getUrlImg() {
@@ -50,9 +51,9 @@ public class Noticia implements Comparable<Noticia> {
     @Override
     public String toString() {
         return "Noticia{" +
-                "titulo='" + titulo + '\'' +
-                ", detalle='" + detalle + '\'' +
-                ", fecha=" + fecha +
+                "titulo='" + title + '\'' +
+                ", detalle='" + detail + '\'' +
+                ", fecha=" + date +
                 ", urlImg='" + urlImg + '\'' +
                 ", img=" + Arrays.toString(img) +
                 ", link='" + link + '\'' +
@@ -73,7 +74,7 @@ public class Noticia implements Comparable<Noticia> {
 
     @Override
     public int compareTo(Noticia noticia) {
-        return noticia.getFecha().compareTo(this.getFecha());
+        return noticia.getDate().compareTo(this.getDate());
     }
 
     @Override
@@ -81,11 +82,11 @@ public class Noticia implements Comparable<Noticia> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Noticia noticia = (Noticia) o;
-        return titulo.equals(noticia.titulo);
+        return title.equals(noticia.title);
     }
 
     @Override
     public int hashCode() {
-        return titulo.hashCode();
+        return title.hashCode();
     }
 }

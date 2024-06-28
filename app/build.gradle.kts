@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clase4"
+    namespace = "com.example.trabajoPracticoIntegrador"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.clase4"
+        applicationId = "com.example.trabajoPracticoIntegrador"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

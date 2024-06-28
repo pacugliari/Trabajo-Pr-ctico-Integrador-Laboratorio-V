@@ -1,4 +1,4 @@
-package com.example.clase4;
+package com.example.trabajoPracticoIntegrador;
 
 import org.junit.Test;
 

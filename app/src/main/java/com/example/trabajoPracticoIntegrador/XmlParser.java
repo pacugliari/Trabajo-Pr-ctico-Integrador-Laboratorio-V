@@ -1,10 +1,9 @@
-package com.example.clase4;
+package com.example.trabajoPracticoIntegrador;
 
 import android.util.Xml;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.trabajoPracticoIntegrador.models.Noticia;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -17,21 +16,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class XmlParser {
-
-    public static List<Noticia> parserJsonNoticias(String jsonNoticias) throws JSONException {
-        String not = "[{'titulo':'TEXTO','edad':12},{'titulo':'TEXTO2'}]";
-
-        JSONArray aNoticias = new JSONArray(jsonNoticias);
-        for (int i = 0; i < aNoticias.length(); i++) {
-            JSONObject n1 = aNoticias.getJSONObject(i);
-            String titulo = n1.getString("titulo");
-            int edad = n1.getInt("edad");
-            int edad2 = n1.optInt("edad");
-            int edad3 = n1.optInt("edad", -1);
-        }
-
-        return null;
-    }
 
     public static List<Noticia> parserNoticias(String xmlNoticias) throws XmlPullParserException, IOException, ParseException {
         List<Noticia> noticias = new ArrayList<>();
@@ -46,15 +30,13 @@ public class XmlParser {
                     n = new Noticia();
                 } else if (tag.equals("title") && n != null) {
                     String texto = xmlPullParser.nextText();
-                    n.setTitulo(texto);
+                    n.setTitle(texto);
                 } else if (tag.equals("description") && n != null) {
-                    /*String texto = xmlPullParser.nextText();
-                    n.setDetalle(texto);*/
                     String texto = xmlPullParser.nextText();
-                    texto = texto.replace("<ul><li>", "");
-                    texto = texto.replace("</li></ul>", "");
-                    texto = texto.replace("</li><li>", "");
-                    n.setDetalle(texto);
+                    String htmlText = "<html><head><style>body { color: "+MainActivity.COLOR_TEXT+"; }</style></head><body>"
+                            + texto
+                            + "</body></html>";
+                    n.setDetail(htmlText);
                 } else if (tag.equals("link") && n != null) {
                     String texto = xmlPullParser.nextText();
                     n.setLink(texto);
@@ -64,7 +46,7 @@ public class XmlParser {
                 } else if (tag.equals("pubDate") && n != null) {
                     SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
                     String fechaTexto = xmlPullParser.nextText();
-                    n.setFecha(sdf.parse(fechaTexto));
+                    n.setDate(sdf.parse(fechaTexto));
                 }
             } else if (event == XmlPullParser.END_TAG) {
                 String tag = xmlPullParser.getName();
@@ -77,4 +59,6 @@ public class XmlParser {
         }
         return noticias;
     }
+
+
 }

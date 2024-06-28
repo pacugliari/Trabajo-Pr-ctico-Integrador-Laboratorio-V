@@ -1,8 +1,9 @@
-package com.example.clase4;
+package com.example.trabajoPracticoIntegrador;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+
+import com.example.trabajoPracticoIntegrador.models.Noticia;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
-public class HiloConexion extends Thread {
+public class ThreadConnection extends Thread {
     Handler colaMensaje;
 
     String url;
@@ -23,13 +24,13 @@ public class HiloConexion extends Thread {
 
     public static final int NOTICIAS = 1;
 
-    public HiloConexion(Handler colaMensaje, String url, boolean esFoto) {
+    public ThreadConnection(Handler colaMensaje, String url, boolean esFoto) {
         this.colaMensaje = colaMensaje;
         this.url = url;
         this.esFoto = esFoto;
     }
 
-    public HiloConexion(Handler colaMensaje, String url, boolean esFoto, int position) {
+    public ThreadConnection(Handler colaMensaje, String url, boolean esFoto, int position) {
         this.colaMensaje = colaMensaje;
         this.url = url;
         this.esFoto = esFoto;
@@ -39,7 +40,14 @@ public class HiloConexion extends Thread {
 
     @Override
     public void run() {
-        ConexionHTTP c = new ConexionHTTP();
+        HTTPConnection c = new HTTPConnection();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         byte[] respuesta = c.getInfo(this.url);
 
         //Log.d("Noticias", new String(respuesta));
@@ -60,7 +68,7 @@ public class HiloConexion extends Thread {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            msj.obj = noticias;
+            msj.obj = new ThreadResponse(noticias,this.url);
             msj.arg1 = NOTICIAS;
 
         }
